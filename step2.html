@@ -1,1 +1,73 @@
- 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择塔罗师 - 塔罗牌占卜</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">选择您的塔罗师</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 塔罗师卡片 1 -->
+            <div class="reader-card bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow" data-reader-id="1">
+                <div class="flex items-center mb-4">
+                    <img src="images/reader1.jpg" alt="Thomas Quinn" class="w-16 h-16 rounded-full object-cover mr-4">
+                    <div>
+                        <h3 class="text-xl font-semibold">Thomas Quinn</h3>
+                        <p class="text-gray-600">塔罗牌专家</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4">拥有15年塔罗牌解读经验，擅长爱情、事业和人生方向的指引。</p>
+                <div class="flex items-center text-sm text-gray-500">
+                    <span class="mr-4">⭐ 4.9 (128)</span>
+                    <span>15年经验</span>
+                </div>
+            </div>
+
+            <!-- 塔罗师卡片 2 -->
+            <div class="reader-card bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow" data-reader-id="2">
+                <div class="flex items-center mb-4">
+                    <img src="images/reader2.jpg" alt="Isabella Vega" class="w-16 h-16 rounded-full object-cover mr-4">
+                    <div>
+                        <h3 class="text-xl font-semibold">Isabella Vega</h3>
+                        <p class="text-gray-600">占星术大师</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4">20年占星经验，结合塔罗牌与占星术，提供更全面的解读。</p>
+                <div class="flex items-center text-sm text-gray-500">
+                    <span class="mr-4">⭐ 4.8 (95)</span>
+                    <span>20年经验</span>
+                </div>
+            </div>
+
+            <!-- 塔罗师卡片 3 -->
+            <div class="reader-card bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow" data-reader-id="3">
+                <div class="flex items-center mb-4">
+                    <img src="images/reader3.jpg" alt="Michael Chen" class="w-16 h-16 rounded-full object-cover mr-4">
+                    <div>
+                        <h3 class="text-xl font-semibold">Michael Chen</h3>
+                        <p class="text-gray-600">灵气读者</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4">10年灵气疗愈经验，擅长通过塔罗牌连接能量场，提供深度解读。</p>
+                <div class="flex items-center text-sm text-gray-500">
+                    <span class="mr-4">⭐ 4.7 (76)</span>
+                    <span>10年经验</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <button id="continue-btn" class="bg-purple-600 text-white px-6 py-3 rounded-lg opacity-50 cursor-not-allowed" disabled>
+                继续
+            </button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

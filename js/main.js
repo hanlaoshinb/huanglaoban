@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (currentPage === 'about.html') {
         initAboutPage();
     } else if (currentPage === 'step2.html') {
-        initReaderSelectionPage();
+        initReaderSelection();
     } else if (currentPage === 'step3.html') {
         initQuestionPage();
     } else if (currentPage === 'step4.html') {
@@ -60,14 +60,44 @@ function initHomePage() {
 function initReaderSelection() {
     console.log('读者选择页面已初始化');
     const readerCards = document.querySelectorAll('.reader-card');
-    readerCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const readerId = this.getAttribute('data-reader-id');
-            if (readerId) {
-                window.location.href = `readers.html?id=${readerId}`;
+    const continueBtn = document.getElementById('continue-btn');
+    
+    // 只添加一次继续按钮的点击事件
+    if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+            if (!this.disabled) {
+                // 跳转到下一步
+                window.location.href = 'step3.html';
             }
         });
-    });
+    }
+    
+    if (readerCards.length > 0) {
+        readerCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // 移除其他卡片的选中状态
+                readerCards.forEach(c => c.classList.remove('border-purple-500', 'border-2'));
+                
+                // 添加当前卡片的选中状态
+                this.classList.add('border-purple-500', 'border-2');
+                
+                // 获取读者信息
+                const readerId = this.getAttribute('data-reader-id');
+                const readerName = this.querySelector('h3').textContent;
+                
+                // 保存选择的读者信息到本地存储
+                localStorage.setItem('selectedReaderId', readerId);
+                localStorage.setItem('selectedReaderName', readerName);
+                
+                // 启用继续按钮
+                if (continueBtn) {
+                    continueBtn.disabled = false;
+                    continueBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    continueBtn.classList.add('hover:bg-purple-700');
+                }
+            });
+        });
+    }
 }
 
 // 读者详情页面初始化
