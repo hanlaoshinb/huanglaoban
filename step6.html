@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>塔罗牌占卜结果 - 塔罗牌占卜</title>
+    <meta name="description" content="查看您的塔罗牌占卜结果，了解命运指引和人生方向。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8A2BE2',
+                        secondary: '#FF6EC7',
+                        dark: '#1E1E2E',
+                        light: '#F5F5F7'
+                    },
+                    fontFamily: {
+                        sans: ['Helvetica', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light text-dark font-sans">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-1">
+                <a href="index.html" class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    <span class="text-xl font-bold">Tarotap</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium">
+                    <span class="text-yellow-500 mr-1">👑</span> 会员订阅
+                </a>
+                <a href="#" class="px-3 py-2 text-sm font-medium">AI塔罗占卜</a>
+                <a href="#" class="px-3 py-2 text-sm font-medium">是否塔罗占卜</a>
+                <div class="relative group">
+                    <a href="#" class="px-3 py-2 text-sm font-medium flex items-center">
+                        塔罗运势
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="relative group">
+                    <a href="#" class="px-3 py-2 text-sm font-medium flex items-center">
+                        学习
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                </div>
+                <a href="#" class="px-3 py-2 text-sm font-medium">问题反馈</a>
+                <a href="#" class="px-3 py-2 text-sm font-medium">真人塔罗占卜</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-600 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+                    </svg>
+                </button>
+                <button class="text-gray-600 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white text-xs">
+                    您
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <section class="py-12 px-4">
+            <div class="container mx-auto max-w-5xl">
+                <div class="text-center mb-10">
+                    <h1 class="text-3xl font-bold mb-4">塔罗牌 <span class="text-secondary">占卜结果</span></h1>
+                    <p class="text-gray-600 max-w-xl mx-auto">探索您的塔罗牌占卜，获得洞察和指引</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <div class="flex items-start space-x-4 mb-6">
+                        <div class="flex-shrink-0">
+                            <img src="images/user-question.png" alt="您的问题" class="w-12 h-12 rounded-full object-cover" onerror="this.src='https://placehold.co/100x100/8A2BE2/FFFFFF?text=问题'">
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold">您的问题</h3>
+                            <p class="mt-2 text-gray-600" id="userQuestion">这段缘分是未完待续...还是终将被散?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-center">抽取的牌</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="w-full aspect-[2/3] bg-yellow-100 rounded-lg border-2 border-purple-300 shadow-md flex items-center justify-center">
+                                    <img src="images/cards/strength.jpg" alt="力量" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/160x240/8A2BE2/FFFFFF?text=力量'">
+                                </div>
+                                <p class="text-center text-sm font-medium">问题的核心</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="w-full aspect-[2/3] bg-yellow-100 rounded-lg border-2 border-purple-300 shadow-md flex items-center justify-center">
+                                    <img src="images/cards/hanged-man.jpg" alt="倒吊人" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/160x240/8A2BE2/FFFFFF?text=倒吊人'">
+                                </div>
+                                <p class="text-center text-sm font-medium">障碍或挑战</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="w-full aspect-[2/3] bg-yellow-100 rounded-lg border-2 border-purple-300 shadow-md flex items-center justify-center">
+                                    <img src="images/cards/hierophant.jpg" alt="教皇" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/160x240/8A2BE2/FFFFFF?text=教皇'">
+                                </div>
+                                <p class="text-center text-sm font-medium">解决方案</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="w-full aspect-[2/3] bg-yellow-100 rounded-lg border-2 border-purple-300 shadow-md flex items-center justify-center">
+                                    <img src="images/cards/five-of-cups.jpg" alt="宝剑五" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/160x240/8A2BE2/FFFFFF?text=宝剑五'">
+                                </div>
+                                <p class="text-center text-sm font-medium">未来趋势</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                                <img src="images/tarot-master-1.jpg" alt="奇灵" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/8A2BE2/FFFFFF?text=奇灵'">
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">奇灵</h3>
+                                <p class="text-sm text-gray-500">AI塔罗师</p>
+                            </div>
+                        </div>
+                        <div class="mb-4 text-gray-600">
+                            <p class="mb-2">亲爱的咨询者，你的问题是关于一段感情，你想知道这段缘分是否会继续。</p>
+                            <p class="mb-2">从卡牌来看，这段关系的核心是<strong class="text-primary">「力量」</strong>，表示你对这段关系有着强烈的情感和依恋，内心有着坚持的勇气。但同时，<strong class="text-primary">「倒吊人」</strong>作为障碍出现，意味着你们之间存在观念不合，或者某一方需要做出牺牲。</p>
+                            <p class="mb-2">解决方案是<strong class="text-primary">「教皇」</strong>，暗示在这段关系中，传统的价值观和承诺会起到关键作用。也许是时候认真讨论你们的关系未来，明确彼此的期望。</p>
+                            <p>未来趋势是<strong class="text-primary">「宝剑五」</strong>，这可能意味着有一段困难的时期需要经历。但如果能够共同度过，关系可能会更加牢固。</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-semibold mb-2">总结</h4>
+                            <p class="text-gray-700">这段缘分尚未结束，但需要双方的努力和沟通。当前的挑战需要新的视角和理解。如果能够坦诚相待，建立信任，这段关系很可能会继续，但形式可能会有所改变。最终的结果在于你们如何共同面对即将到来的挑战。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-10">
+                    <a href="#" class="inline-block bg-primary hover:bg-purple-700 text-white text-lg font-medium py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
+                        保存结果
+                    </a>
+                    <a href="index.html" class="inline-block bg-white border border-primary hover:bg-gray-100 text-primary text-lg font-medium py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 ml-4">
+                        返回首页
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 mb-10">
+                    <h3 class="text-xl font-semibold mb-4">更多洞察</h3>
+                    <p class="text-gray-600 mb-6">如果您希望获得更深入的解读，可以考虑以下选项：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border border-gray-200 rounded-lg p-4 flex items-start hover:shadow-md transition-shadow">
+                            <div class="flex-shrink-0 mr-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium mb-2">详细解读报告</h4>
+                                <p class="text-gray-600 text-sm">获取更详细的塔罗牌解读报告，包括每张牌的详细解释和相互关系分析。</p>
+                                <a href="#" class="text-primary text-sm font-medium mt-2 inline-block">立即获取 →</a>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 flex items-start hover:shadow-md transition-shadow">
+                            <div class="flex-shrink-0 mr-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium mb-2">真人塔罗师解读</h4>
+                                <p class="text-gray-600 text-sm">与我们的专业塔罗师进行一对一的解读会话，获取个性化的指导和建议。</p>
+                                <a href="#" class="text-primary text-sm font-medium mt-2 inline-block">立即预约 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-primary/5 rounded-xl p-6 mb-10">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold">温馨提示</h4>
+                            <p class="mt-2 text-gray-600">塔罗牌占卜提供的是建议和参考，最终的决定权在您手中。我们建议您将占卜结果作为生活中的一种指导，而不是绝对的真理。保持积极的心态，相信自己的判断力，这将引导您走向更美好的未来。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                    <p class="text-gray-400 text-sm">Tarotap是一个专业的塔罗牌占卜平台，致力于为用户提供准确、个性化的塔罗牌解读服务。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="index.html" class="hover:text-white">首页</a></li>
+                        <li><a href="#" class="hover:text-white">AI塔罗占卜</a></li>
+                        <li><a href="#" class="hover:text-white">真人塔罗占卜</a></li>
+                        <li><a href="#" class="hover:text-white">会员订阅</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">学习资源</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">塔罗牌基础知识</a></li>
+                        <li><a href="#" class="hover:text-white">牌阵介绍</a></li>
+                        <li><a href="#" class="hover:text-white">塔罗牌解读技巧</a></li>
+                        <li><a href="#" class="hover:text-white">塔罗师训练</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <p class="text-gray-400 text-sm mb-2">邮箱: contact@aihinto.com</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+                <p>&copy; 2025 Tarotap. 版权所有 michael。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 从URL获取用户问题
+        document.addEventListener('DOMContentLoaded', function() {
+            // 尝试从URL参数获取问题
+            const urlParams = new URLSearchParams(window.location.search);
+            const question = urlParams.get('question');
+            
+            // 如果URL有问题参数，则更新显示
+            if (question) {
+                document.getElementById('userQuestion').textContent = question;
+            }
+        });
+    </script>
+</body>
+</html> 

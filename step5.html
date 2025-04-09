@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽取您的塔罗牌 - 塔罗牌占卜</title>
+    <meta name="description" content="从扇形牌面中抽取塔罗牌，开启您的命运解读之旅。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8A2BE2',
+                        secondary: '#FF6EC7',
+                        dark: '#1E1E2E',
+                        light: '#F5F5F7'
+                    },
+                    fontFamily: {
+                        sans: ['Helvetica', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-fan {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .tarot-card {
+            position: absolute;
+            width: 120px;
+            height: 200px;
+            background-color: #f8f0ff;
+            border: 2px solid #9966CC;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-origin: bottom center;
+            background-image: linear-gradient(to bottom, #f0e6ff, #d9c2ff);
+        }
+        
+        .tarot-card:hover {
+            transform: translateY(-20px) !important;
+            box-shadow: 0 8px 16px rgba(138, 43, 226, 0.3);
+            z-index: 20 !important;
+        }
+        
+        .tarot-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid #7a3fcc;
+            border-radius: 5px;
+            background-image: repeating-linear-gradient(45deg, #9966CC20, #9966CC20 10px, transparent 10px, transparent 20px);
+        }
+        
+        .tarot-card.selected {
+            animation: selectCard 1s forwards;
+        }
+        
+        @keyframes selectCard {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1) translateY(-20px);
+            }
+        }
+        
+        .card-slots {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .card-slot {
+            width: 120px;
+            height: 200px;
+            border: 2px dashed #9966CC;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-light text-dark font-sans">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-1">
+                <a href="index.html" class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    <span class="text-xl font-bold">Tarotap</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium">
+                    <span class="text-yellow-500 mr-1">👑</span> 会员订阅
+                </a>
+                <a href="#" class="px-3 py-2 text-sm font-medium">AI塔罗占卜</a>
+                <a href="#" class="px-3 py-2 text-sm font-medium">是否塔罗占卜</a>
+                <div class="relative group">
+                    <a href="#" class="px-3 py-2 text-sm font-medium flex items-center">
+                        塔罗运势
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="relative group">
+                    <a href="#" class="px-3 py-2 text-sm font-medium flex items-center">
+                        学习
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                </div>
+                <a href="#" class="px-3 py-2 text-sm font-medium">问题反馈</a>
+                <a href="#" class="px-3 py-2 text-sm font-medium">真人塔罗占卜</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-600 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+                    </svg>
+                </button>
+                <button class="text-gray-600 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white text-xs">
+                    您
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <section class="py-12 px-4">
+            <div class="container mx-auto max-w-4xl">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold mb-4">
+                        <span class="text-dark">抽取您的</span>
+                        <span class="text-secondary">塔罗牌</span>
+                    </h1>
+                    <p class="text-gray-600 max-w-xl mx-auto">左右滑动选择与您能量最为应和的卡牌</p>
+                </div>
+
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <button id="shuffleBtn" class="flex items-center bg-primary text-white px-4 py-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        在线洗牌
+                    </button>
+                    <button id="resetBtn" class="flex items-center border border-gray-300 px-4 py-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        请再抽取4张牌
+                    </button>
+                </div>
+
+                <div class="card-fan" id="cardFan">
+                    <!-- 扇形牌面会通过JavaScript动态生成 -->
+                </div>
+
+                <div class="card-slots" id="cardSlots">
+                    <div class="card-slot" data-position="问题的核心">问题的核心</div>
+                    <div class="card-slot" data-position="障碍或挑战">障碍或挑战</div>
+                    <div class="card-slot" data-position="解决方案">解决方案</div>
+                    <div class="card-slot" data-position="未来趋势">未来趋势</div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <a id="interpretBtn" href="step6.html" class="inline-block bg-primary hover:bg-purple-700 text-white text-lg font-medium py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 opacity-50 cursor-not-allowed" disabled>
+                        解读结果
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                    <p class="text-gray-400 text-sm">Tarotap是一个专业的塔罗牌占卜平台，致力于为用户提供准确、个性化的塔罗牌解读服务。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="index.html" class="hover:text-white">首页</a></li>
+                        <li><a href="#" class="hover:text-white">AI塔罗占卜</a></li>
+                        <li><a href="#" class="hover:text-white">真人塔罗占卜</a></li>
+                        <li><a href="#" class="hover:text-white">会员订阅</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">学习资源</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">塔罗牌基础知识</a></li>
+                        <li><a href="#" class="hover:text-white">牌阵介绍</a></li>
+                        <li><a href="#" class="hover:text-white">塔罗牌解读技巧</a></li>
+                        <li><a href="#" class="hover:text-white">塔罗师训练</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <p class="text-gray-400 text-sm mb-2">邮箱: contact@aihinto.com</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+                <p>&copy; 2025 Tarotap. 版权所有 michael。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cardFan = document.getElementById('cardFan');
+            const cardSlots = document.getElementById('cardSlots');
+            const shuffleBtn = document.getElementById('shuffleBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const interpretBtn = document.getElementById('interpretBtn');
+            
+            const totalCards = 40; // 扇形中的牌数量
+            let selectedCards = 0;
+            const tarotCards = [
+                '权杖一', '权杖二', '权杖三', '权杖四', '权杖五', '权杖六', '权杖七', '权杖八', '权杖九', '权杖十', 
+                '权杖侍从', '权杖骑士', '权杖王后', '权杖国王',
+                '圣杯一', '圣杯二', '圣杯三', '圣杯四', '圣杯五', '圣杯六', '圣杯七', '圣杯八', '圣杯九', '圣杯十', 
+                '圣杯侍从', '圣杯骑士', '圣杯王后', '圣杯国王',
+                '宝剑一', '宝剑二', '宝剑三', '宝剑四', '宝剑五', '宝剑六', '宝剑七', '宝剑八', '宝剑九', '宝剑十', 
+                '宝剑侍从', '宝剑骑士', '宝剑王后', '宝剑国王',
+                '星币一', '星币二', '星币三', '星币四', '星币五', '星币六', '星币七', '星币八', '星币九', '星币十', 
+                '星币侍从', '星币骑士', '星币王后', '星币国王',
+                '愚者', '魔术师', '女祭司', '皇后', '皇帝', '教皇', '恋人', '战车', '力量', '隐士', 
+                '命运之轮', '正义', '悬吊者', '死神', '节制', '恶魔', '塔', '星星', '月亮', '太阳', '审判', '世界'
+            ];
+            
+            // 创建扇形牌面
+            function createCardFan() {
+                cardFan.innerHTML = '';
+                // 随机选择牌
+                const shuffledCards = [...tarotCards].sort(() => 0.5 - Math.random()).slice(0, totalCards);
+                
+                for (let i = 0; i < totalCards; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'tarot-card';
+                    card.dataset.cardName = shuffledCards[i];
+                    
+                    // 计算旋转角度，使牌呈扇形分布
+                    const angle = -50 + (i * 100 / (totalCards - 1));
+                    const offsetY = Math.abs(angle) * 0.5;
+                    
+                    card.style.transform = `rotate(${angle}deg) translateY(${offsetY}px)`;
+                    card.style.zIndex = i;
+                    card.style.left = `calc(50% - 60px)`;
+                    card.style.bottom = '20px';
+                    
+                    card.addEventListener('click', selectCard);
+                    
+                    cardFan.appendChild(card);
+                }
+            }
+            
+            // 选择卡牌
+            function selectCard() {
+                if (selectedCards >= 4 || this.classList.contains('selected')) {
+                    return;
+                }
+                
+                // 标记卡牌为已选择
+                this.classList.add('selected');
+                this.removeEventListener('click', selectCard);
+                
+                // 查找下一个空插槽
+                const emptySlots = Array.from(cardSlots.children).filter(slot => !slot.querySelector('.tarot-card'));
+                if (emptySlots.length > 0) {
+                    const slot = emptySlots[0];
+                    const cardClone = this.cloneNode(true);
+                    cardClone.style.transform = 'none';
+                    cardClone.style.position = 'static';
+                    cardClone.style.width = '100%';
+                    cardClone.style.height = '100%';
+                    slot.innerHTML = '';
+                    slot.appendChild(cardClone);
+                    
+                    selectedCards++;
+                    
+                    // 如果所有插槽都已填充，启用解读按钮
+                    if (selectedCards === 4) {
+                        interpretBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        interpretBtn.classList.add('cursor-pointer');
+                        interpretBtn.removeAttribute('disabled');
+                    }
+                }
+            }
+            
+            // 洗牌按钮
+            shuffleBtn.addEventListener('click', function() {
+                createCardFan();
+            });
+            
+            // 重置按钮
+            resetBtn.addEventListener('click', function() {
+                // 清空所有插槽
+                Array.from(cardSlots.children).forEach(slot => {
+                    slot.innerHTML = slot.dataset.position;
+                });
+                
+                // 移除所有已选标记
+                Array.from(cardFan.querySelectorAll('.selected')).forEach(card => {
+                    card.classList.remove('selected');
+                    card.addEventListener('click', selectCard);
+                });
+                
+                selectedCards = 0;
+                
+                // 禁用解读按钮
+                interpretBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                interpretBtn.classList.remove('cursor-pointer');
+                interpretBtn.setAttribute('disabled', true);
+            });
+            
+            // 初始化扇形牌面
+            createCardFan();
+        });
+    </script>
+</body>
+</html> 

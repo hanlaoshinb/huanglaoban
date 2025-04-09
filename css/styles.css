@@ -1,0 +1,197 @@
+/* 基础样式设置 */
+:root {
+    --primary-color: #8A2BE2;
+    --secondary-color: #FF6EC7;
+    --dark-color: #1E1E2E;
+    --light-color: #F5F5F7;
+}
+
+/* 基础样式 */
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+/* 滚动效果 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 卡片悬停效果 */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 塔罗牌动画效果 */
+@keyframes cardFlip {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+.card-flip {
+    perspective: 1000px;
+}
+
+.card-flip:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-inner {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* 进度条样式 */
+.progress-step {
+    position: relative;
+}
+
+.progress-step::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #e2e8f0;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+}
+
+.progress-step:last-child::after {
+    display: none;
+}
+
+.progress-step.active .step-number {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin: 0 auto 10px;
+}
+
+/* 加载动画 */
+.loading-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(138, 43, 226, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8A2BE2;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7b1fa2;
+}
+
+/* 文本渐变效果 */
+.gradient-text {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* 按钮点击效果 */
+.btn-pulse:active {
+    animation: pulse 0.3s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 图片悬停放大效果 */
+.img-zoom {
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.img-zoom:hover img {
+    transform: scale(1.05);
+}
+
+.img-zoom img {
+    transition: transform 0.3s ease;
+}
+
+/* 夜间模式支持 */
+@media (prefers-color-scheme: dark) {
+    .dark-mode-support {
+        background-color: var(--dark-color);
+        color: var(--light-color);
+    }
+} 
